@@ -9,10 +9,10 @@ AI stage에서 제공한 server, GPU
 
 ## 개요
 1. [Installation](#installation)
-2. [Data preprocessing](#data preprocessing)
-3. [3 models](#Create separate models for age, mask, and gender (three_model.ipynb))
-4. [1 model](#Create a single model for all age, mask, and gender (one_model.ipynb))
-5. [Voting](#Voting (voting.ipynb))
+2. [Data preprocessing](#data-preprocessing-(label.ipynb))
+3. [3 models](#Create-separate-models-for-age,-mask,-and-gender-(three_model.ipynb))
+4. [1 model](#Create-a-single-model-for-all-age,-mask,-and-gender-(one_model.ipynb))
+5. [Voting](#Voting-(voting.ipynb))
 
 ## Installation
 다음과 같은 명령어로 필요한 libraries를 다운 받습니다.
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 데이터셋은 2700명의 사람들이 각각 마스크를 안 쓴 사진 1장, 쓴 사진 5장, 제대로 쓰지 않은 사진 1장으로 되어있습니다.
 데이터는 공개 할 수 없습니다.
 
-## Data preprocessing
+## Data preprocessing (label.ipynb)
 label 파일은 데이터의 노이즈를 제거해주는 파일입니다.
   1. 이미지를 한장한장 띄워주고, 해당 이미지의 설명과 다른 이미지가 있다면 (1)을 눌러 wrong images폴더에 넣어줍니다.
   2. wrong images폴더 안에있는 이미지들을 띄워주어 다시 한번 검토하여 불필요한 이미지가 있다면 삭제합니다.
@@ -64,7 +64,7 @@ Model | Test Accuracy
 ------------ | -------------
 resnet152 | 91.64
 vit_base_patch16_224 | 2.51
-custom_model | 
+custom_model | 92.12
 
 Test dataset을 만들어서 위에서 만든 모델로 eval images에 대한 답을 추출한다.
 
@@ -82,11 +82,11 @@ Combined Model (resnet의 결과값에 가중치 1, vit의 결과값에 가중�
 - resnet50 (complex transformation applied)
 - resnet34
 - resnet34 (mean and std for each image)
-- vit
-- vit
-- vit 
-- vit
-- vit
+- vit_base_patch16_224(kfold5,epoch2, batch64)
+- vit_base_patch16_224(stratified-kfold5, epoch1, cutmix-beta1, batch64)
+- vit_base_patch16_224(kfold5, epoch1, batch64) 
+- vit_base_patch16_224(stratified-kfold3, epoch5,  cutmix-beta1,batch64, swa)
+- vit_large_patch16_224(stratified-kfold5, epoch1, batch 16)
 
 Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 score (final)
 ------------ | ------------- | ------------- | -------------
