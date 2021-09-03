@@ -33,17 +33,40 @@ label 파일은 데이터의 노이즈를 제거해주는 파일입니다.
   4. 재분류한 이미지들을 csv파일로 만들어 줍니다. (이미지의 절대 경로와 class를 저장합니다)
 
 
-#### Create separate models for Age, Mask, and Gender
+## Create separate models for age, mask, and gender (three_model.ipynb)
+model: resnet152
+설명
+  1. resnet152 pretrained 모델에서 마지막 fully connected layer를 제거
+  2. 3개의 다른 fully connected layers를 생성하여 각각 age, mask, gender에 적용
+  3. 3개의 다른 fully connected layers에서 나온 결과값을 합하여 final output을 생성
 
-
-#### Search Data Leak
-To learn more about data leak, please, refer to [this post](https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/72534). Following comand will create *data_leak.ahash.csv* and *data_leak.phash.csv*. [The other leak](https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/73395y) is already in *data* directory.
+## Create a single model for all age, mask, and gender (one_model.ipynb)
+다음과 같이 wandb를 설정해주세요.
 ```
-$ python find_data_leak.py
+wandb.init(project='your-project-name', entity='your-entity-name',config = {
+    'learning_rate':0.001,
+    'batch_size':16,
+    'epoch':2,
+    'model':'your-model-name',
+    'momentum':0.9,
+    'img_x':img_size_x[2],
+    'img_y':img_size_y[2],
+    'kfold_num':3,
+})
+config = wandb.config
 ```
 
-## Training
-In configs directory, you can find configurations I used train my final models. My final submission is ensemble of resnet34 x 5, inception-v3 and se-resnext50, but ensemble of inception-v3 and se-resnext50's performance is better.
+Model | GPUs | Image size | Training Epochs | k-fold | batch size | learning_rate | momentum
+------------ | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | -------------
+resnet152 | V100 | 224x224 | 2 | 3 | 16 | 0.001 | 0.9
+vit_base_patch16_224 | V100 | 224x224 | 2 | 3 | 16 | 0.001 | 0.9
+custom_model | V100 | 224x224 | 2 | 3 | 16 | 0.001 | 0.9
+
+Model | Test Accuracy
+------------ | -------------
+resnet152 | 
+vit_base_patch16_224 | 
+custom_model | 
 
 ### Search augmentation
 To find suitable augmentation, 256x256 image and resnet18 are used.
