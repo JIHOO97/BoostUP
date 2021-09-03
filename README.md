@@ -104,4 +104,4 @@ Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 sc
 
 파일:clasify_module.ipynb
 
-모델에 대한 gradient 값을 출력하고 ,
+모델에 대한 gradient 값을 출력하고 , backward graph plot
