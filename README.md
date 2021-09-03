@@ -69,8 +69,8 @@ custom_model | V100 | 224x224 | 2 | 3 | 16 | 0.001 | 0.9
 Model | Test Accuracy
 ------------ | -------------
 resnet152 | 91.64
-vit_base_patch16_224 | 2.51
-custom_model | 92.12
+custom_model | 2.51
+vit_base_patch16_224 | 92.12
 
 Test dataset을 만들어서 위에서 만든 모델로 eval images에 대한 답을 추출한다.
 
