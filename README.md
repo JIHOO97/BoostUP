@@ -13,7 +13,7 @@ AI stage에서 제공한 server, GPU
 3. [3 models](#create-separate-models-for-age-mask-and-gender)
 4. [1 model](#create-a-single-model-for-all-age-mask-and-gender)
 5. [Voting](#voting)
-
+6. Weight Check and Bacward Graph plot
 ## Installation
 다음과 같은 명령어로 필요한 libraries를 다운 받습니다.
 ```
@@ -99,3 +99,9 @@ Combined Model (resnet의 결과값에 가중치 1, vit의 결과값에 가중�
 Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 score (final)
 ------------ | ------------- | ------------- | -------------
 81.635 | 0.781 | 81.000 | 0.771
+
+## Weight Check and Bacward Graph plot
+
+파일:clasify_module.ipynb
+
+모델에 대한 gradient 값을 출력하고 ,
