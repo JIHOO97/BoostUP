@@ -9,7 +9,7 @@ AI stage에서 제공한 server, GPU
 
 ## 개요
 1. [Installation](#installation)
-2. [Data preprocessing](#dataset)
+2. [Data preprocessing](#data preprocessing (label.ipynb))
 3. [3 models](#Create separate models for age, mask, and gender (three_model.ipynb))
 4. [1 model](#Create a single model for all age, mask, and gender (one_model.ipynb))
 5. [Voting](#Voting (voting.ipynb))
