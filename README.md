@@ -13,7 +13,7 @@ AI stage에서 제공한 server, GPU
 3. [3 models](#create-separate-models-for-age-mask-and-gender)
 4. [1 model](#create-a-single-model-for-all-age-mask-and-gender)
 5. [Voting](#voting)
-6. Weight Check and Bacward Graph plot
+6. [Weight Check and Bacward Graph plot]
 ## Installation
 다음과 같은 명령어로 필요한 libraries를 다운 받습니다.
 ```
