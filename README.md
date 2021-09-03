@@ -35,6 +35,7 @@ label 파일은 데이터의 노이즈를 제거해주는 파일입니다.
 
 ## Create separate models for age, mask, and gender (three_model.ipynb)
 model: resnet152
+
 설명
   1. resnet152 pretrained 모델에서 마지막 fully connected layer를 제거
   2. 3개의 다른 fully connected layers를 생성하여 각각 age, mask, gender에 적용
