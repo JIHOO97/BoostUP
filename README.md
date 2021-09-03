@@ -9,11 +9,10 @@ AI stage에서 제공한 server, GPU
 
 ## 개요
 1. [Installation](#installation)
-2. [Download Official Image](#download-official-image)
-3. [Make RGBY Images](#make-rgby-images) for official.
-4. [Download Pretrained models](#pretrained-models)
-5. [Inference](#inference)
-6. [Make Submission](#make-submission)
+2. [Data preprocessing](#download-official-image)
+3. [3 models](#Create separate models for age, mask, and gender (three_model.ipynb))
+4. [1 model](#Create a single model for all age, mask, and gender (one_model.ipynb))
+5. [Voting](#Voting (voting.ipynb))
 
 ## Installation
 다음과 같은 명령어로 필요한 libraries를 다운 받습니다.
