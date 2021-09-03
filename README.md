@@ -69,16 +69,15 @@ custom_model |
 
 Test dataset을 만들어서 위에서 만든 모델로 eval images에 대한 답을 추출한다.
 
-Model | Eval Accuracy | Eval F1 score
------------- | ------------- | -------------
-resnet152 | 91.64 | 
-vit_base_patch16_224 | 2.51 | 
-custom_model | 
+Model | Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 score (final)
+------------ | ------------- | ------------- | ------------- | -------------
+resnet152 | 80.460 | 0.774 | 79.937 | 0.755
+vit_base_patch16_224 | 79.952 | 0.766 | 79.619 | 0.756
 
 ## Voting (voting.ipynb)
 가장 성능이 좋았던 10개의 모델을 불러내어 softvoting하여 output추출
 
-Combined Model
+Combined Model (resnet의 결과값에 가중치 1, vit의 결과값에 가중치 0.625)
 - resnet152
 - resnet50
 - resnet50 (complex transformation applied)
@@ -90,6 +89,6 @@ Combined Model
 - vit
 - vit
 
-Eval Accuracy | Eval F1 score
------------- | -------------
- | 
+Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 score (final)
+------------ | ------------- | ------------- | -------------
+81.635 | 0.781 | 81.000 | 0.771
