@@ -9,11 +9,10 @@ AI stage에서 제공한 server, GPU
 
 ## 개요
 1. [Installation](#installation)
-2. [Download Official Image](#download-official-image)
-3. [Make RGBY Images](#make-rgby-images) for official.
-4. [Download Pretrained models](#pretrained-models)
-5. [Inference](#inference)
-6. [Make Submission](#make-submission)
+2. [Data preprocessing](#data preprocessing)
+3. [3 models](#Create separate models for age, mask, and gender (three_model.ipynb))
+4. [1 model](#Create a single model for all age, mask, and gender (one_model.ipynb))
+5. [Voting](#Voting (voting.ipynb))
 
 ## Installation
 다음과 같은 명령어로 필요한 libraries를 다운 받습니다.
@@ -25,7 +24,7 @@ pip install -r requirements.txt
 데이터셋은 2700명의 사람들이 각각 마스크를 안 쓴 사진 1장, 쓴 사진 5장, 제대로 쓰지 않은 사진 1장으로 되어있습니다.
 데이터는 공개 할 수 없습니다.
 
-## Data preprocessing (label.ipynb)
+## Data preprocessing
 label 파일은 데이터의 노이즈를 제거해주는 파일입니다.
   1. 이미지를 한장한장 띄워주고, 해당 이미지의 설명과 다른 이미지가 있다면 (1)을 눌러 wrong images폴더에 넣어줍니다.
   2. wrong images폴더 안에있는 이미지들을 띄워주어 다시 한번 검토하여 불필요한 이미지가 있다면 삭제합니다.
@@ -69,16 +68,15 @@ custom_model |
 
 Test dataset을 만들어서 위에서 만든 모델로 eval images에 대한 답을 추출한다.
 
-Model | Eval Accuracy | Eval F1 score
------------- | ------------- | -------------
-resnet152 | 91.64 | 
-vit_base_patch16_224 | 2.51 | 
-custom_model | 
+Model | Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 score (final)
+------------ | ------------- | ------------- | ------------- | -------------
+resnet152 | 80.460 | 0.774 | 79.937 | 0.755
+vit_base_patch16_224 | 79.952 | 0.766 | 79.619 | 0.756
 
 ## Voting (voting.ipynb)
 가장 성능이 좋았던 10개의 모델을 불러내어 softvoting하여 output추출
 
-Combined Model
+Combined Model (resnet의 결과값에 가중치 1, vit의 결과값에 가중치 0.625)
 - resnet152
 - resnet50
 - resnet50 (complex transformation applied)
@@ -90,6 +88,6 @@ Combined Model
 - vit
 - vit
 
-Eval Accuracy | Eval F1 score
------------- | -------------
- | 
+Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 score (final)
+------------ | ------------- | ------------- | -------------
+81.635 | 0.781 | 81.000 | 0.771
