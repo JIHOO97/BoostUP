@@ -1,16 +1,13 @@
 # Boostcamp Image Classification Competition
 Competition의 목적은 사람 얼굴 이미지 데이터만을 가지고 마스크를 썼는지, 쓰지 않았는지, 정확히 쓴 것인지를 분류하는것에 있었습니다. 하지만 추가적으로 나이대, 성별 특성을 추가하여 총 18개의 분류로 나누는 것이 최종적인 목표가 되었습니다.
 
-To read the detailed solution, please, refer to [the Kaggle post](https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/77320)
+대회 사이트 [AI stage](https://stages.ai/)
 
 ## Hardware
-The following specs were used to create the original solution.
-- Ubuntu 16.04 LTS
-- Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz
-- 3x NVIDIA TitanX 
+AI stage에서 제공한 server, GPU
+- GPU: V100
 
-## Reproducing Submission
-To reproduct my submission without retrainig, do the following steps:
+## 개요
 1. [Installation](#installation)
 2. [Download Official Image](#download-official-image)
 3. [Make RGBY Images](#make-rgby-images) for official.
@@ -19,75 +16,25 @@ To reproduct my submission without retrainig, do the following steps:
 6. [Make Submission](#make-submission)
 
 ## Installation
-All requirements should be detailed in requirements.txt. Using Anaconda is strongly recommended.
+다음과 같은 명령어로 필요한 libraries를 다운 받습니다.
 ```
-conda create -n hpa python=3.6
-source activate hpa
 pip install -r requirements.txt
 ```
 
-## Dataset Preparation
-All required files except images are already in data directory.
-If you generate CSV files (duplicate image list, split, leak.. ), original files are overwritten. The contents will be changed, but It's not a problem.
+## Dataset
+데이터셋은 2700명의 사람들이 각각 마스크를 안 쓴 사진 1장, 쓴 사진 5장, 제대로 쓰지 않은 사진 1장으로 되어있습니다.
+데이터는 공개 할 수 없습니다.
 
-### Prepare Images
-After downloading and converting images, the data directory is structured as:
-```
-data
-  +- raw
-  |  +- train
-  |  +- test
-  |  +- external
-  +- rgby
-  |  +- train
-  |  +- test
-  |  +- external
-```
-#### Download Official Image
-Download and extract *train.zip* and *test.zip* to *data/raw* directory.
-If the Kaggle API is installed, run following command.
-```
-$ kaggle competitions download -c human-protein-atlas-image-classification -f train.zip
-$ kaggle competitions download -c human-protein-atlas-image-classification -f test.zip
-$ mkdir -p data/raw
-$ unzip train.zip -d data/raw/train
-$ unzip test.zip -d data/raw/test
-```
+### Data preprocessing (label.ipynb)
+label 파일은 데이터의 노이즈를 제거해주는 파일입니다.
+  1. 이미지를 한장한장 띄워주고, 해당 이미지의 설명과 다른 이미지가 있다면 (1)을 눌러 wrong images폴더에 넣어줍니다.
+  2. wrong images폴더 안에있는 이미지들을 띄워주어 다시 한번 검토하여 불필요한 이미지가 있다면 삭제합니다.
+  3. wrong images폴더에 남은 이미지들을 다시 띄워주어 해당 이미지가 어느 class에 해당되는지 숫자를 치면, 자동으로 해당 class로 재분류가 됩니다.
+  4. 재분류한 이미지들을 csv파일로 만들어 줍니다. (이미지의 절대 경로와 class를 저장합니다)
 
-#### Download External Images
-To download external images, run following command. The external images will be located in *data/raw/external*
-```
-$ python tools/download.py
-```
 
-#### Make RGBY Images
-To train or inference, converting to RGBY image is required. Run following commands.
+#### Create separate models for Age, Mask, and Gender
 
-For official:
-```
-$ python tools/make_rgby.py --input_dir=data/raw/train --output_dir=data/rgby/train
-$ python tools/make_rgby.py --input_dir=data/raw/test --output_dir=data/rgby/test
-```
-For external:
-```
-$ python tools/make_rgby.py --input_dir=data/raw/external --output_dir=data/rgby/external
-```
-
-### Generate CSV files
-*You can skip this step. All CSV files are prepared in data directory.*
-
-#### Duplicated Image List
-There are duplicated images. To search them, run following commands. *duplicates.ahash.csv* and *duplicates.phash.csv* will be generated.
-```
-$ python tools/find_duplicate_images.py
-```
-
-#### Split Dataset
-Create 5 folds CV set. One for training, the other for searching augmentation. *split.stratified.[0-4].csv* and *split.stratified.small.[0-4].csv* will be generated.
-```
-$ python stratified_split.py
-$ python stratified_split.py --use_external=0
-```
 
 #### Search Data Leak
 To learn more about data leak, please, refer to [this post](https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/72534). Following comand will create *data_leak.ahash.csv* and *data_leak.phash.csv*. [The other leak](https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/73395y) is already in *data* directory.
