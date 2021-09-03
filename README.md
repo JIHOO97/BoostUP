@@ -1,5 +1,5 @@
-# kaggle-hpa-image-classification
-Code for 3rd place solution in Kaggle Human Protein Atlas Image Classification Challenge.
+# Boostcamp Image Classification Competition
+Competition의 목적은 사람 얼굴 이미지 데이터만을 가지고 마스크를 썼는지, 쓰지 않았는지, 정확히 쓴 것인지를 분류하는것에 있었습니다. 하지만 추가적으로 나이대, 성별 특성을 추가하여 총 18개의 분류로 나누는 것이 최종적인 목표가 되었습니다.
 
 To read the detailed solution, please, refer to [the Kaggle post](https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/77320)
 
