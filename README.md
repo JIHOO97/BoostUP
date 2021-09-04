@@ -14,6 +14,7 @@ AI stage에서 제공한 server, GPU
 4. [1 model](#create-a-single-model-for-all-age-mask-and-gender)
 5. [Voting](#voting)
 6. [Weight Check and Bacward Graph plot](#weight-check-and-bacward-graph-plot)
+7. [References](#references)
 ## Installation
 다음과 같은 명령어로 필요한 libraries를 다운 받습니다.
 ```
@@ -105,3 +106,5 @@ Eval Accuracy (test) | Eval F1 score (test) | Eval Accuracy (final) | Eval F1 sc
 파일:clasify_module.ipynb
 
 모델에 대한 gradient 값을 출력하고 , backward graph plot
+
+## References
